@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <style>body{visibility:hidden}</style>
+<script type="module">
+import {initializeApp,getApps} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+const cfg={apiKey:"AIzaSyBXjotZW1_ETCuuh_AfjhHcu8ks9AFAtpM",authDomain:"go-cima.firebaseapp.com",projectId:"go-cima",storageBucket:"go-cima.firebasestorage.app",messagingSenderId:"45206357674",appId:"1:45206357674:web:74817b99fc601c8a11b2d3"};
+const app=getApps()[0]||initializeApp(cfg);
+onAuthStateChanged(getAuth(app),u=>{
+  if(u){document.body.style.visibility="visible"}
+  else{location.replace("signin.html")}
+});
+</script>
+  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GO CIMA | جو سيما</title>
