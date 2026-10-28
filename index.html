@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GO CIMA | جو سيما</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:#fff;font-family:Arial,sans-serif}
+header{background:#161616;padding:16px;position:sticky;top:0;z-index:10;border-bottom:2px solid #e50914}
+.logo{font-size:27px;font-weight:bold;color:#e50914;text-align:center}
+.logo span{color:white}
+.search{width:100%;padding:13px;margin-top:14px;border:1px solid #444;border-radius:9px;background:#252525;color:white;font-size:16px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#111}
+nav button{white-space:nowrap;border:0;border-radius:20px;padding:10px 15px;background:#292929;color:white}
+nav button.active{background:#e50914}
+main{padding:14px;max-width:1100px;margin:auto}
+h2{font-size:20px;border-right:4px solid #e50914;padding-right:10px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:#1d1d1d;border-radius:11px;overflow:hidden;cursor:pointer}
+.poster{width:100%;aspect-ratio:2/3;object-fit:cover;background:#292929}
+.noPoster{aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;color:#bbb;text-align:center;padding:12px}
+.cardInfo{padding:10px}
+.cardTitle{font-size:15px;font-weight:bold;margin:0 0 7px}
+.meta{font-size:12px;color:#bbb}
+button{cursor:pointer}
+.action{background:#e50914;color:white;border:0;border-radius:8px;padding:11px 15px;margin:5px}
+.secondary{background:#333}
+#details{display:none;position:fixed;inset:0;background:#090909;z-index:20;overflow-y:auto;padding:16px}
+#detailsInner{max-width:750px;margin:auto}
+.banner{width:100%;max-height:280px;object-fit:cover;border-radius:10px}
+#player{width:100%;max-height:350px;background:black;margin-top:15px}
+.episode{background:#222;padding:12px;border-radius:8px;margin:8px 0}
+.notice{color:#bbb;font-size:14px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  /* GO CIMA - New Design */
+
+body {
+  background: #080808;
+  color: #fff;
+}
+
+.card {
+  background: #181818;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #292929;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:active {
+  transform: scale(0.97);
+}
+
+.poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.cardInfo {
+  padding: 12px;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.meta {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.grid {
+  gap: 14px;
+}
+  /* GO CIMA - Header Design */
+
+header {
+  background: linear-gradient(180deg, #1c0505, #101010);
+  padding: 20px 15px;
+  border-bottom: 1px solid #3a1010;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-shadow: 0 0 18px rgba(229, 9, 20, 0.35);
+}
+
+.search {
+  background: #202020;
+  color: white;
+  border: 1px solid #383838;
+  border-radius: 12px;
+  padding: 14px;
+  outline: none;
+}
+
+.search:focus {
+  border-color: #e50914;
+}
+
+nav {
+  padding: 12px;
+  background: #101010;
+  gap: 10px;
+}
+
+nav button {
+  background: #242424;
+  color: #ddd;
+  border-radius: 25px;
+  padding: 11px 16px;
+  font-weight: bold;
+}
+
+nav button.active {
+  background: #e50914;
+  color: white;
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+}
+
+h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  border-right: 4px solid #e50914;
+  padding-right: 12px;
+}
+  /* شريط التنقل السفلي */
+
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background: #111;
+  border-top: 2px solid #e50914;
+  padding: 10px 5px;
+  z-index: 15;
+}
+
+.bottomNav button {
+  flex: 1;
+  background: transparent;
+  color: #aaa;
+  border: none;
+  font-size: 13px;
+  padding: 10px 2px;
+  cursor: pointer;
+}
+
+.bottomNav button.selected {
+  color: #fff;
+  font-weight: bold;
+  background: #e50914;
+  border-radius: 12px;
+}
+
+main {
+  padding-bottom: 100px;
+  }
+  /* صفحة الفئات */
+
+#categoriesPage {
+  min-height: 100vh;
+  background: #090909;
+  padding: 25px 15px 110px;
+  color: white;
+}
+
+#categoriesPage h2 {
+  font-size: 25px;
+  margin-bottom: 25px;
+}
+
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.categoriesGrid button {
+  background: linear-gradient(135deg, #292929, #151515);
+  color: white;
+  border: 1px solid #383838;
+  border-radius: 15px;
+  padding: 25px 10px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.categoriesGrid button:active {
+  background: #e50914;
+  transform: scale(0.97);
+}
+  /* تحسين صفحة تفاصيل الفيلم */
+
+#details {
+  background: #080808;
+}
+
+  #detailsInner {
+  background: #111;
+  min-height: 100%;
+  padding: 0;
+  border-radius: 0;
+  }
+
+.banner {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 18px;
+}
+
+#detailsContent h2 {
+  font-size: 26px;
+  color: #fff;
+  border-right: 4px solid #e50914;
+  padding-right: 12px;
+  margin: 15px 0;
+}
+
+#detailsContent p {
+  color: #ccc;
+  line-height: 1.9;
+  font-size: 15px;
+}
+
+#detailsContent .action {
+  background: #e50914;
+  border-radius: 12px;
+  padding: 13px 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#closeDetails {
+  position: fixed !important;
+  top: 12px !important;
+  right: 12px !important;
+  z-index: 30;
+  width: 40px;
+  height: 40px;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.55) !important;
+  color: white;
+  font-size: 22px;
+  line-height: 40px;
+  text-align: center;
+}
+
+#player {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+  margin: 0;
+  background: black;
+  display: block;
+  object-fit: contain;
+}
+#detailsContent > *:not(#player) {
+  margin-left: 18px;
+  margin-right: 18px;
+}
+.episode {
+  background: #202020;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 0;
+  height: 48px;
+  margin: 0;
+  font-size: 17px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.episode.active {
+  background: #e50914;
+  border-color: #e50914;
+}
+
+#episodesGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin: 10px 18px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">GO CIMA <span>| جو سيما</span></div>
+<input class="search" id="search" placeholder="🔍 ابحث عن فيلم أو مسلسل...">
+</header>
+
+<nav id="categories"></nav>
+
+<main>
+<h2 id="sectionTitle">🎬 كل المحتوى</h2>
+<p id="status">جاري تحميل الأفلام والمسلسلات...</p>
+<div class="grid" id="contentGrid"></div>
+</main>
+<div class="bottomNav" id="bottomNav">
+  <button id="homeTab" class="selected">🏠 الرئيسية</button>
+  <button id="favoritesTab">❤️ المفضلة</button>
+  <button id="categoriesTab">🎭 الفئات</button>
+  <button id="downloadsTab">⬇️ التنزيلات</button>
+</div>
+  <div id="categoriesPage" style="display:none">
+  <h2>🎭 الفئات</h2>
+
+  <div class="categoriesGrid">
+    <button>🔥 أكشن</button>
+    <button>🎭 دراما</button>
+    <button>😂 كوميدي</button>
+    <button>👻 رعب</button>
+    <button>❤️ رومانسي</button>
+    <button>⚡ إثارة</button>
+    <button>🎬 مصري</button>
+    <button>🌍 أجنبي</button>
+    <button>🇹🇷 تركي</button>
+    <button>🇮🇳 هندي</button>
+    <button>🇰🇷 كوري</button>
+    <button>🎌 أنمي</button>
+  </div>
+  </div>
+<div id="details">
+<div id="detailsInner">
+<button class="action secondary" id="closeDetails">➜</button>
+<div id="detailsContent"></div>
+</div>
+</div>
+
+<script type="module">
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+
+import {getFirestore,collection,getDocs}
+from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+/* استبدل إعدادات Firebase بالإعدادات المحفوظة عندك */
+const firebaseConfig = {
+  apiKey: "AIzaSyBXjotZW1_ETCuuh_AfjhHcu8ks9AFAtpM",
+  authDomain: "go-cima.firebaseapp.com",
+  projectId: "go-cima",
+  storageBucket: "go-cima.firebasestorage.app",
+  messagingSenderId: "45206357674",
+  appId: "1:45206357674:web:74817b99fc601c8a11b2d3"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+const $=id=>document.getElementById(id);
+
+let contents=[];
+let selectedCategory="الكل";
+$("homeTab").onclick = () => {
+  $("categoriesPage").style.display = "none";
+document.querySelector("main").style.display = "block";
+$("categories").style.display = "flex";
+  selectedCategory = "الكل";
+  $("search").value = "";
+
+  document.querySelectorAll(".bottomNav button")
+    .forEach(btn => btn.classList.remove("selected"));
+
+  $("homeTab").classList.add("selected");
+
+  renderCategories();
+  renderContent();
+
+  window.scrollTo({top: 0, behavior: "smooth"});
+};
+  $("favoritesTab").onclick = () => {
+  selectedCategory = "المفضلة";
+  $("search").value = "";
+
+  document.querySelectorAll(".bottomNav button")
+    .forEach(btn => btn.classList.remove("selected"));
+
+  $("favoritesTab").classList.add("selected");
+
+  renderCategories();
+  renderContent();
+
+  window.scrollTo({top: 0, behavior: "smooth"});
+};
+  $("categoriesTab").onclick = () => {
+  $("categoriesPage").style.display = "block";
+  document.querySelector("main").style.display = "none";
+  $("categories").style.display = "none";
+
+  document.querySelectorAll(".bottomNav button")
+    .forEach(btn => btn.classList.remove("selected"));
+
+  $("categoriesTab").classList.add("selected");
+
+  window.scrollTo(0, 0);
+};
+  document.querySelectorAll(".categoriesGrid button")
+  .forEach(button => {
+    button.onclick = () => {
+      const category = button.textContent.trim()
+        .replace(/^[^\u0600-\u06FF]+/, "");
+
+      selectedCategory = category;
+
+      $("categoriesPage").style.display = "none";
+      document.querySelector("main").style.display = "block";
+      $("categories").style.display = "flex";
+
+      renderCategories();
+      renderContent();
+
+      window.scrollTo(0, 0);
+    };
+  });
+const categories=[
+"الكل","أفلام","مسلسلات",
+"مصري","عربي","أجنبي",
+"تركي","هندي","كوري","أنمي","المفضلة"
+];
+
+function getFavorites(){
+  try{
+    return JSON.parse(localStorage.getItem("gocima_favorites")||"[]");
+  }catch{
+    return [];
+  }
+}
+
+function toggleFavorite(id){
+  let fav=getFavorites();
+  if(fav.includes(id)){
+    fav=fav.filter(x=>x!==id);
+  }else{
+    fav.push(id);
+  }
+  localStorage.setItem("gocima_favorites",JSON.stringify(fav));
+}
+
+function renderCategories(){
+  $("categories").replaceChildren();
+
+  categories.forEach(cat=>{
+    const btn=document.createElement("button");
+    btn.textContent=cat;
+    btn.className=selectedCategory===cat?"active":"";
+    btn.onclick=()=>{
+      selectedCategory=cat;
+      renderCategories();
+      renderContent();
+    };
+    $("categories").append(btn);
+  });
+}
+
+function filteredContents(){
+  const search=$("search").value.trim().toLowerCase();
+
+  return contents.filter(item=>{
+    const matchSearch=
+      (item.name||"").toLowerCase().includes(search);
+
+    let matchCategory=true;
+
+    if(selectedCategory==="أفلام"){
+      matchCategory=item.type==="movie";
+    }else if(selectedCategory==="مسلسلات"){
+      matchCategory=item.type==="series";
+    }else if(selectedCategory==="المفضلة"){
+      matchCategory=getFavorites().includes(item.id);
+      }else if(selectedCategory!=="الكل"){
+  const genres = [
+    "أكشن", "دراما", "كوميدي",
+    "رعب", "رومانسي", "إثارة"
+  ];
+
+  if(genres.includes(selectedCategory)){
+    matchCategory = (item.genre || "")
+      .includes(selectedCategory);
+  }else{
+    matchCategory = item.country === selectedCategory;
+  }
+    }
+
+    return matchSearch&&matchCategory;
+  });
+}
+
+function renderContent(){
+  const list=filteredContents();
+  $("contentGrid").replaceChildren();
+  $("sectionTitle").textContent="🎬 "+selectedCategory;
+
+  if(!list.length){
+    $("status").textContent="لا يوجد محتوى في هذا القسم حاليًا";
+    return;
+  }
+
+  $("status").textContent="";
+
+  list.forEach(item=>{
+    const card=document.createElement("div");
+    card.className="card";
+
+    if(item.posterUrl){
+      const img=document.createElement("img");
+      img.className="poster";
+      img.src=item.posterUrl;
+      img.alt=item.name||"بوستر";
+      card.append(img);
+    }else{
+      const placeholder=document.createElement("div");
+      placeholder.className="noPoster";
+      placeholder.textContent="🎬 "+(item.name||"");
+      card.append(placeholder);
+    }
+
+    const info=document.createElement("div");
+    info.className="cardInfo";
+
+    const title=document.createElement("p");
+    title.className="cardTitle";
+    title.textContent=item.name||"بدون اسم";
+
+    const meta=document.createElement("div");
+    meta.className="meta";
+    meta.textContent=
+      (item.type==="series"?"مسلسل":"فيلم")+
+      " | ⭐ "+(item.rating||"—");
+
+    info.append(title,meta);
+    card.append(info);
+    card.onclick=()=>openDetails(item);
+    $("contentGrid").append(card);
+  });
+}
+
+function openDetails(item){
+  $("details").style.display="block";
+  $("detailsContent").replaceChildren();
+
+  const box=$("detailsContent");
+
+  if(item.bannerUrl){
+    const img=document.createElement("img");
+    img.className="banner";
+    img.src=item.bannerUrl;
+    box.append(img);
+  }
+
+  const title=document.createElement("h2");
+  title.textContent=item.name||"بدون اسم";
+
+  const info=document.createElement("p");
+  info.textContent=
+    `${item.country||""} | ${item.year||""} | ⭐ ${item.rating||"—"}`;
+
+  const description=document.createElement("p");
+  description.textContent=item.description||"لا يوجد وصف";
+
+  const favorite=document.createElement("button");
+  favorite.className="action secondary";
+
+  function updateFavoriteButton(){
+    favorite.textContent=getFavorites().includes(item.id)
+      ?"❤️ إزالة من المفضلة"
+      :"🤍 إضافة للمفضلة";
+  }
+
+  updateFavoriteButton();
+
+  favorite.onclick=()=>{
+    toggleFavorite(item.id);
+    updateFavoriteButton();
+    if(selectedCategory==="المفضلة")renderContent();
+  };
+
+  const movieInfo = document.createElement("div");
+movieInfo.append(title, info, description, favorite);
+box.append(movieInfo);
+const isBunnyVideo = url =>
+  typeof url === "string" &&
+  url.startsWith("https://iframe.mediadelivery.net/embed/");
+
+const createBunnyPlayer = url => {
+  const iframe = document.createElement("iframe");
+  iframe.src = url;
+  iframe.style.width = "100%";
+  iframe.style.aspectRatio = "16 / 9";
+  iframe.style.border = "0";
+  iframe.allow = "accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture";
+  iframe.allowFullscreen = true;
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
+  return iframe;
+};
+  const video=document.createElement("video");
+  video.id="player";
+  video.controls=true;
+  video.playsInline=true;
+
+  if(item.type==="movie"){
+    if(item.videoUrl){
+      if(isBunnyVideo(item.videoUrl)){
+  const bunnyPlayer = createBunnyPlayer(item.videoUrl);
+  bunnyPlayer.id = "player";
+  box.prepend(bunnyPlayer);
+}else{
+  video.src = item.videoUrl;
+  box.prepend(video);
+      }
+    }else{
+      const p=document.createElement("p");
+      p.className="notice";
+      p.textContent="الفيديو غير متوفر حاليًا";
+      box.append(p);
+    }
+  }else{
+    const heading=document.createElement("h3");
+    heading.textContent="📺 الحلقات";
+    box.append(heading);
+
+    const episodes=Array.isArray(item.episodes)
+      ?[...item.episodes]:[];
+
+    episodes.sort((a,b)=>
+      Number(a.season)-Number(b.season)||
+      Number(a.number)-Number(b.number)
+    );
+
+    if(!episodes.length){
+      const p=document.createElement("p");
+      p.textContent="لا توجد حلقات حتى الآن";
+      box.append(p);
+    }
+const grid=document.createElement("div");
+grid.id="episodesGrid";
+box.append(grid);
+    episodes.forEach(ep=>{
+      const btn=document.createElement("button");
+      btn.className="episode";
+      btn.textContent=ep.number;
+
+      btn.onclick=()=>{
+        grid.querySelectorAll(".episode").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+        if(!ep.url){
+          alert("فيديو الحلقة غير متوفر");
+          return;
+        }
+
+        const oldPlayer = box.querySelector("#player");
+
+if(oldPlayer){
+  if(oldPlayer.tagName === "VIDEO"){
+    oldPlayer.pause();
+  }
+  oldPlayer.remove();
+}
+
+if(isBunnyVideo(ep.url)){
+  const bunnyPlayer = createBunnyPlayer(ep.url);
+  bunnyPlayer.id = "player";
+  box.prepend(bunnyPlayer);
+  bunnyPlayer.scrollIntoView({behavior:"smooth"});
+}else{
+  video.src = ep.url;
+  box.prepend(video);
+  video.load();
+  video.scrollIntoView({behavior:"smooth"});
+}
+      };
+
+      grid.append(btn);
+    });
+    box.prepend(movieInfo);
+
+const playerElement = box.querySelector("#player");
+
+if(playerElement){
+  box.prepend(playerElement);}
+  }
+  }
+function closeDetails(){
+const player = $("player");
+
+if(player){
+  if(player.tagName === "VIDEO"){
+    player.pause();
+    player.removeAttribute("src");
+    player.load();
+  }else{
+    player.remove();
+  }
+}
+  $("details").style.display="none";
+  document.body.style.overflow="";
+}
+
+$("closeDetails").onclick=closeDetails;
+$("search").oninput=renderContent;
+
+async function loadContent(){
+  $("status").textContent="جاري تحميل المحتوى...";
+
+  try{
+    const snapshot=await getDocs(collection(db,"content"));
+    contents=snapshot.docs.map(d=>({
+      ...d.data(),id:d.id
+    }));
+    renderContent();
+  }catch(error){
+    console.error(error);
+    $("status").textContent=
+      "❌ حصلت مشكلة أثناء تحميل المحتوى: "+error.message;
+  }
+}
+
+renderCategories();
+loadContent();
+</script>
+</body>
+  </html>
