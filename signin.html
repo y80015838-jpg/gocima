@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GO CIMA | تسجيل الدخول</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#080808;color:white;font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{width:100%;max-width:400px;background:#171717;padding:25px;border-radius:18px;border:1px solid #333;text-align:center}
+h1{color:#e50914;font-size:32px;margin:0 0 5px}
+p.sub{color:#bbb;margin:0 0 20px;font-size:14px}
+.tabs{display:flex;gap:8px;margin-bottom:20px}
+.tabs button{flex:1;padding:12px;background:#252525;color:#bbb;border:0;border-radius:10px;font-size:16px;cursor:pointer}
+.tabs button.active{background:#e50914;color:white}
+input{width:100%;padding:15px;margin-bottom:15px;background:#252525;color:white;border:1px solid #444;border-radius:10px;font-size:16px;outline:none}
+input:focus{border-color:#e50914}
+#go{width:100%;padding:15px;background:#e50914;color:white;border:0;border-radius:10px;font-size:18px;font-weight:bold;cursor:pointer}
+#go:disabled{opacity:.6}
+#msg{margin-top:18px;font-size:14px;line-height:1.8;min-height:24px}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>GO CIMA</h1>
+  <p class="sub">سجّل دخولك للمتابعة</p>
+
+  <div class="tabs">
+    <button id="tabLogin" class="active" type="button">تسجيل الدخول</button>
+    <button id="tabSignup" type="button">حساب جديد</button>
+  </div>
+
+  <input type="email" id="email" placeholder="البريد الإلكتروني" autocomplete="username">
+  <input type="password" id="password" placeholder="كلمة المرور" autocomplete="current-password">
+  <input type="password" id="password2" placeholder="تأكيد كلمة المرور" autocomplete="new-password" style="display:none">
+
+  <button id="go" type="button">دخول</button>
+  <div id="msg"></div>
+</div>
+
+<script type="module">
+import {initializeApp,getApps} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,onAuthStateChanged}
+from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBXjotZW1_ETCuuh_AfjhHcu8ks9AFAtpM",
+  authDomain: "go-cima.firebaseapp.com",
+  projectId: "go-cima",
+  storageBucket: "go-cima.firebasestorage.app",
+  messagingSenderId: "45206357674",
+  appId: "1:45206357674:web:74817b99fc601c8a11b2d3"
+};
+
+const app = getApps()[0] || initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const $ = id => document.getElementById(id);
+let mode = "login";
+
+onAuthStateChanged(auth, user => {
+  if(user) location.replace("index.html");
+});
+
+function setMode(m){
+  mode = m;
+  $("tabLogin").classList.toggle("active", m==="login");
+  $("tabSignup").classList.toggle("active", m==="signup");
+  $("password2").style.display = m==="signup" ? "block" : "none";
+  $("go").textContent = m==="signup" ? "إنشاء الحساب" : "دخول";
+  $("msg").textContent = "";
+}
+$("tabLogin").onclick = () => setMode("login");
+$("tabSignup").onclick = () => setMode("signup");
+
+function say(text, color){
+  $("msg").style.color = color;
+  $("msg").textContent = text;
+}
+
+function arabicError(code){
+  switch(code){
+    case "auth/email-already-in-use": return "هذا البريد مسجّل بالفعل، جرّب تسجيل الدخول.";
+    case "auth/weak-password": return "كلمة المرور ضعيفة، اكتب 6 أحرف أو أرقام على الأقل.";
+    case "auth/invalid-email": return "البريد الإلكتروني غير صحيح.";
+    case "auth/invalid-credential":
+    case "auth/wrong-password":
+    case "auth/user-not-found": return "البريد أو كلمة المرور غير صحيحة.";
+    case "auth/too-many-requests": return "محاولات كثيرة، حاول بعد قليل.";
+    case "auth/network-request-failed": return "تأكد من اتصال الإنترنت.";
+    default: return "حصلت مشكلة، حاول مرة أخرى.";
+  }
+}
+
+$("go").onclick = async () => {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+
+  if(!email || !password){ say("اكتب البريد وكلمة المرور","#ff7777"); return; }
+  if(mode==="signup" && password !== $("password2").value){
+    say("كلمتا المرور غير متطابقتين","#ff7777"); return;
+  }
+
+  $("go").disabled = true;
+  say("لحظة...","white");
+
+  try{
+    if(mode==="signup") await createUserWithEmailAndPassword(auth,email,password);
+    else await signInWithEmailAndPassword(auth,email,password);
+    say("تم ✅","#00ff88");
+    location.replace("index.html");
+  }catch(e){
+    console.error(e);
+    say(arabicError(e.code),"#ff7777");
+  }finally{
+    $("go").disabled = false;
+  }
+};
+</script>
+</body>
+</html>
