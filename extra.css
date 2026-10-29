@@ -11,3 +11,21 @@
   border-right:none !important;
   padding-right:0 !important;
   }
+#details{
+  padding:0 !important;
+}
+#detailsInner{
+  max-width:none !important;
+  width:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+  border-radius:0 !important;
+}
+#detailsContent{
+  padding:0 !important;
+}
+#detailsContent #player{
+  width:100% !important;
+  border-radius:0 !important;
+  margin:0 !important;
+}
