@@ -1,0 +1,13 @@
+#detailsContent .banner{
+  float:right !important;
+  width:105px !important;
+  height:155px !important;
+  max-height:none !important;
+  object-fit:cover;
+  border-radius:10px;
+  margin:14px 18px 10px 14px !important;
+}
+#detailsContent h2{
+  border-right:none !important;
+  padding-right:0 !important;
+  }
