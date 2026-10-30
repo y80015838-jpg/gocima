@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <style>body{visibility:hidden}</style>
+<style>body{visibility:hidden}</style>
 <script type="module">
 import {initializeApp,getApps} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
 import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 const cfg={apiKey:"AIzaSyBXjotZW1_ETCuuh_AfjhHcu8ks9AFAtpM",authDomain:"go-cima.firebaseapp.com",projectId:"go-cima",storageBucket:"go-cima.firebasestorage.app",messagingSenderId:"45206357674",appId:"1:45206357674:web:74817b99fc601c8a11b2d3"};
 const app=getApps()[0]||initializeApp(cfg);
-onAuthStateChanged(getAuth(app),u=>{
-  if(u){document.body.style.visibility="visible"}
-  else{location.replace("signin.html")}
-});
+onAuthStateChanged(getAuth(app),u=>{ if(u){document.body.style.visibility="visible"} else{location.replace("signin.html")} });
 </script>
-  <link rel="stylesheet" href="extra.css?v=2">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GO CIMA | جو سيما</title>
@@ -314,6 +310,13 @@ main {
   gap: 10px;
   margin: 10px 18px;
 }
+/* extra: poster small beside title + full width */
+#detailsContent .banner{float:right !important;width:105px !important;height:155px !important;max-height:none !important;object-fit:cover;border-radius:10px;margin:14px 18px 10px 14px !important;}
+#detailsContent h2{border-right:none !important;padding-right:0 !important;}
+#details{padding:0 !important;}
+#detailsInner{max-width:none !important;width:100% !important;margin:0 !important;padding:0 !important;border-radius:0 !important;}
+#detailsContent{padding:0 !important;}
+#detailsContent #player{width:100% !important;border-radius:0 !important;margin:0 !important;}
 </style>
 </head>
 <body>
@@ -751,6 +754,5 @@ async function loadContent(){
 renderCategories();
 loadContent();
 </script>
-  <link rel="stylesheet" href="extra.css">
 </body>
   </html>
